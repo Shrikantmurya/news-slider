@@ -1,5 +1,5 @@
 /*bootstrap 4 and and 5 support vertical slider
-  Updated Date 10-10-2022
+  Date 10-10-2022
 */
 
 if (typeof Object.create !== 'function') {
@@ -173,10 +173,13 @@ if (typeof Object.create !== 'function') {
                 $(`.${tag.classList.value}`).children("a").remove();
                 $(`.${tag.classList.value}`).append('<a href="#" class="pause"><span class="fa fa-play fa-2x"></span></a>');
                 self.options.autoplay = false;
+
             } else {
                 $(`.${tag.classList.value}`).children("a").remove();
                 $(`.${tag.classList.value}`).append('<a href="#" class="play"><span class="fa fa-pause fa-2x"></span></a>')
                 self.options.autoplay = true;
+                location.reload();
+
             }
 
             if (this.options.autoplay && self.timer) {
