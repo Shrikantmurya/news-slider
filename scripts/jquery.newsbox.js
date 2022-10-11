@@ -68,10 +68,12 @@ if (typeof Object.create !== 'function') {
 
             $(self.elem).find('.' + self.newsClassName).on('mouseenter', function () {
                 self.onReset(true);
+
             });
 
             $(self.elem).find('.' + self.newsClassName).on('mouseout', function () {
                 self.onReset(false);
+                console.log(self.options);
             });
 
             //set news visible / hidden
@@ -129,7 +131,7 @@ if (typeof Object.create !== 'function') {
             var card = this.findcardObject();
             if (card) {
                 var nav = '<ul class="pagination pull-right" style="margin: 0px;">' +
-                    '<li class="PausePlay"><a href="#" class="play"><span class="fa fa-pause fa-2x"></span></a></li>' +
+                    '<li class="PausePlay"><a href="#" class="play playbtn"><span class="fa fa-pause fa-2x"></span></a></li>' +
                     '<li><a href="#" class="prev"><span class="fa fa-angle-down fa-2x"></span></a></li>' +
                     '<li><a href="#" class="next"><span class="fa fa-angle-up fa-2x"></span></a></li>' +
 
@@ -162,28 +164,24 @@ if (typeof Object.create !== 'function') {
         },
 
         onStop: function () {
-
         },
+
 
         onPause: function (tag) {
             var self = this;
-            self.isHovered = true;
-
-            if ($('a.play').length) {
+            if ($('.playbtn').hasClass('play')) {
                 $(`.${tag.classList.value}`).children("a").remove();
-                $(`.${tag.classList.value}`).append('<a href="#" class="pause"><span class="fa fa-play fa-2x"></span></a>');
-                self.options.autoplay = false;
-
-            } else {
-                $(`.${tag.classList.value}`).children("a").remove();
-                $(`.${tag.classList.value}`).append('<a href="#" class="play"><span class="fa fa-pause fa-2x"></span></a>')
-                self.options.autoplay = true;
-                location.reload();
+                $(`.${tag.classList.value}`).append('<a href="#" class="pause playbtn"><span class="fa fa-play fa-2x"></span></a>');
+                self.onReset(true);
+                self.autoplay(true);
 
             }
+            else {
+                $(`.${tag.classList.value}`).children("a").remove();
+                $(`.${tag.classList.value}`).append('<a href="#" class="play playbtn"><span class="fa fa-pause fa-2x"></span></a>')
+                self.onReset(false);
+                self.autoplay(false);
 
-            if (this.options.autoplay && self.timer) {
-                clearTimeout(self.timer);
             }
         },
 
@@ -237,14 +235,17 @@ if (typeof Object.create !== 'function') {
             $(self.$elem).find(self.newsTagName + ':nth-child(' + parseInt(self.options.newsPerPage + 1) + ')').slideUp(self.options.animationSpeed, function () {
                 self.animationStarted = false;
                 self.onReset(self.isHovered);
+
             });
 
             $(self.elem).find('.' + self.newsClassName).on('mouseenter', function () {
                 self.onReset(true);
+
             });
 
             $(self.elem).find('.' + self.newsClassName).on('mouseout', function () {
                 self.onReset(false);
+
             });
         },
 
@@ -300,7 +301,7 @@ if (typeof Object.create !== 'function') {
         newsTickerInterval: 4000, //4 secs
         pauseOnHover: true,
         onStop: null,
-        onPause: null,
+        onPause: true,
         onReset: null,
         onPrev: null,
         onNext: null,
