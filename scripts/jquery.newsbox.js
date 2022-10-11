@@ -1,5 +1,5 @@
-﻿/*bootstrap 4 and and 5 support vertical slider
-  Date 10-10-2022
+/*bootstrap 4 and and 5 support vertical slider
+  Updated Date 10-10-2022
 */
 
 if (typeof Object.create !== 'function') {
@@ -129,13 +129,11 @@ if (typeof Object.create !== 'function') {
             var card = this.findcardObject();
             if (card) {
                 var nav = '<ul class="pagination pull-right" style="margin: 0px;">' +
-                    '<li class="PausePlay"><a href="#" class="play"><span class="fa fa-play fa-2x"></span></a></li>' +
+                    '<li class="PausePlay"><a href="#" class="play"><span class="fa fa-pause fa-2x"></span></a></li>' +
                     '<li><a href="#" class="prev"><span class="fa fa-angle-down fa-2x"></span></a></li>' +
                     '<li><a href="#" class="next"><span class="fa fa-angle-up fa-2x"></span></a></li>' +
-                    
+
                     '</ul><div class="clearfix"></div>';
-
-
                 var footer = $(card).find(".card-footer")[0];
                 if (footer) {
                     $(footer).append(nav);
@@ -154,9 +152,9 @@ if (typeof Object.create !== 'function') {
                     self.onNext();
                 });
 
-                 $(".pagination").find('.PausePlay').on('click', function (ev) {
+                $(".pagination").find('.PausePlay').on('click', function (ev) {
                     ev.preventDefault();
-                     
+
                     self.onPause(ev.currentTarget);
 
                 });
@@ -170,21 +168,22 @@ if (typeof Object.create !== 'function') {
         onPause: function (tag) {
             var self = this;
             self.isHovered = true;
-            //
-                if($('a.play').length){
-                    $(`.${tag.classList.value}`).children("a").remove();
-                    $(`.${tag.classList.value}`).append('<a href="#" class="pause"><span class="fa fa-pause fa-2x"></span></a>')
-                }else{
-                    $(`.${tag.classList.value}`).children("a").remove();
-                    $(`.${tag.classList.value}`).append('<a href="#" class="play"><span class="fa fa-play fa-2x"></span></a>')
 
-                }
-            //    
-                if (this.options.autoplay && self.timer) {
-                    clearTimeout(self.timer);
-                }
+            if ($('a.play').length) {
+                $(`.${tag.classList.value}`).children("a").remove();
+                $(`.${tag.classList.value}`).append('<a href="#" class="pause"><span class="fa fa-play fa-2x"></span></a>');
+                self.options.autoplay = false;
+            } else {
+                $(`.${tag.classList.value}`).children("a").remove();
+                $(`.${tag.classList.value}`).append('<a href="#" class="play"><span class="fa fa-pause fa-2x"></span></a>')
+                self.options.autoplay = true;
+            }
+
+            if (this.options.autoplay && self.timer) {
+                clearTimeout(self.timer);
+            }
         },
-      
+
 
         onReset: function (status) {
             var self = this;
