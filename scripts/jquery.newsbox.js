@@ -180,9 +180,9 @@ if (typeof Object.create !== 'function') {
                 $(`.${tag.classList.value}`).children("a").remove();
                 $(`.${tag.classList.value}`).append('<a href="#" class="play playbtn"><span class="fa fa-pause fa-2x"></span></a>')
                 self.onReset(false);
-                if (self.animationStarted) {
-                    return false;
-                }
+                self.animationStarted = false;
+                e.preventDefault;
+                
 
             }
         },
