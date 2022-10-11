@@ -73,7 +73,7 @@ if (typeof Object.create !== 'function') {
 
             $(self.elem).find('.' + self.newsClassName).on('mouseout', function () {
                 self.onReset(false);
-                console.log(self.options);
+                
             });
 
             //set news visible / hidden
@@ -173,14 +173,16 @@ if (typeof Object.create !== 'function') {
                 $(`.${tag.classList.value}`).children("a").remove();
                 $(`.${tag.classList.value}`).append('<a href="#" class="pause playbtn"><span class="fa fa-play fa-2x"></span></a>');
                 self.onReset(true);
-                self.autoplay(true);
+                self.animationStarted = true;
 
             }
             else {
                 $(`.${tag.classList.value}`).children("a").remove();
                 $(`.${tag.classList.value}`).append('<a href="#" class="play playbtn"><span class="fa fa-pause fa-2x"></span></a>')
                 self.onReset(false);
-                self.autoplay(false);
+                if (self.animationStarted) {
+                    return false;
+                }
 
             }
         },
